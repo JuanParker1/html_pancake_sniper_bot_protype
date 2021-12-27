@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="bot-client.js"></script>
+    <script type="text/javascript" src="comunicador.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Logger //
+        (function () {
+            var old = console.log;
+            console.log = function (message) {
+                var currentdate = new Date();
+                var datetime = "" + currentdate.getHours() + ":" + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+                let logger = document.getElementById("logger")
+                if (typeof message == 'object') {
+                    logger.innerHTML += "[" + datetime + "] " + (JSON && JSON.stringify ? JSON.stringify(message) : message) + '<br />';
+                } else {
+                    logger.innerHTML += "[" + datetime + "] " + message + '<br />';
+                }
+                sendServerTempLog("[" + datetime + "] " + message + '<br />');
+            }
+        })();
+    </script>
+    <link rel="stylesheet" type="text/css" href="bot.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://cdn.jsdelivr.net/g/filesaver.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9/sha256.js"></script>
+     <!-- Bootstrap CSS -->
+     
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@8/dist/sweetalert2.min.css" id="swal2-theme-styles">
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</head>
+
+<body id = "Tudo">
+    
+    <div class="logger" id="logger">
+    </div>
+    <div class="options">
+        <h1 id = "tituloCompraDeTokens" style="color:black; text-align: center;"> Compra de Tokens </h1>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">1. Token Hash</span>
+            </div>
+            <input type="text" class="form-control" id="tokenHash" aria-describedby="basic-addon3">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">2. Quantiadade de tokens para comprar</span>
+            </div>
+            <input type="text" class="form-control" id="tokenQnt" aria-describedby="basic-addon3">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">3. Gas Máximo</span>
+            </div>
+            <input type="number" class="form-control" id="maxGas" aria-describedby="basic-addon3">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">4. Vezes que comprará este token</span>
+            </div>
+            <input type="number" class="form-control" id="buyTimes" aria-describedby="basic-addon3">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">5. Slippage máximo (%)</span>
+            </div>
+            <input type="number" class="form-control" id="slipageMaximo" aria-describedby="basic-addon3">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">6. GWEI</span>
+            </div>
+            <input type="number" class="form-control" id="gwei" aria-describedby="basic-addon3">
+        </div>
+
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="lessValueCheckBox" This="pank-lessValueCheckBox"
+                onclick="checks.check1()">
+            <label id = "lessValueLABEL" style="color: black;" class="custom-control-label" for="lessValueCheckBox">7. Só comprar se o preço o
+                token
+                estiver abaixo ou igual a</label>
+        </div>
+        <div class="input-group mb-3">
+            <input type="number" id="pank-lessValue" class="form-control" placeholder=""
+                aria-label="Recipient's username" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">BNB</span>
+            </div>
+        </div>
+        <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="horarioCheckBox" This="pank-lessValueCheckBox"
+                onclick="checks.check2()">
+            <label id = "lessValueLABEL2" style="color: black;" class="custom-control-label" for="horarioCheckBox">8. Só comprar o token quando
+                chegar neste horário:</label>
+        </div>
+        <div class="input-group mb-3">
+            <input type="time" id="pank-horario" class="form-control" placeholder="" aria-label="Recipient's username"
+                aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">hrs</span>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div style="margin-left: 1em; line-height: 20px;">
+        <button onclick="logger.innerHTML=''; console.log('**SISTEMA: Logger limpo!')" type="button"
+            class="btn btn-primary">0.00 Limpar Logger</button>
+        <button onclick="iniciarBot()" type="button" class="btn btn-success">0.1 Começar</button>
+        <button type="button" class="btn btn-danger">0.2 Parar</button>
+        <button type="button" class="btn btn-warning">0.3 Atualizar</button>
+        <br>
+        <button type="button" onclick="copy(JSON.stringify(localStorage));"class="btn btn-info">0.4 Carregar Configuração</button>
+        <button type="button" class="btn btn-primary" onclick="configuracaoPadrao()">0.5 Configurações Padrões</button>
+        </br>
+        <button onclick= "abrirPoocoin()"type="button" class="btn btn-danger">0.6 abrir Poocoin</button>
+        
+        <!-- área de dados -->
+        <div class="areaDeDados" id = "areaDeDados">
+            <div class="centralizar"><b>Dados</b></div>
+            <b>
+                <div id = "dados">
+                <div id = "saldoBnb">
+                    <br id = "saldo"> 0.7 Seu saldo(BNB): CARREGANDO INFORMAÇÕES</br>
+                </div>
+                <div id = "tokenPreco">
+                    <br> Preço do Token(BNB): CARREGANDO INFORMAÇÕES</br>
+                </div>
+                <div id = "liquidacaoToken">
+                    <br> Liquidação do token(BNB): CARREGANDO INFORMAÇÕES</br>
+                </div>
+                <div id = "tokenNegociacao">
+                    <br> Status do Token(Trading status): CARREGANDO INFORMAÇÕES</br>
+                </div>
+                <div id = "tokenNegociacao">
+                    <br> Taxa de negociação do token(Trading fees):  CARREGANDO INFORMAÇÕES ou Ainda não há</br>
+                </div>
+                <div id = "privateKey">
+                    <br> Seu id privado MetaMask(SHA256): CARREGANDO INFORMAÇÕES </br>
+                </div>
+                <div id = "walletKey">
+                    <br> Sua wallet: CARREGANDO INFORMAÇÕES </br>
+                </div>
+                </div>
+
+            </b>
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- footer creditos -->
+    <footer>
+        <div style="margin-left: 90%; margin-top: 14%">  PROTOTYPE<br>by nukkle</br>  </div>
+        <div style="margin-left: 95%; margin-top: -3%">
+             <img src="../assets/logomarkernukkle.png"> </img>
+        </div>
+        <div style = "margin-left: 90%; margin-top: -1%; ">
+             <div class="form-check form-switch ms-auto mt-3 me-3">🌙
+            <input class="form-check-input" type="checkbox" id="lightSwitch" onclick="onToggleMode()" />
+        </div>
+    </footer>
+</body>
+
+</html>

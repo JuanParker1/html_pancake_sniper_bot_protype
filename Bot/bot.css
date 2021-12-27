@@ -1,0 +1,65 @@
+
+body{
+    /* background-color: black; */
+     /* transition properties */
+     transition: background-color .5s;
+     -moz-transition: background-color .5s;
+     -webkit-transition: background-color .5s;
+     -o-transition: background-color .5s;
+}
+.logger{
+    width: 500px;
+    height: 500px;
+    background-color: gray;
+    color:white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 10px;
+    overflow: auto;
+}
+
+.cornerLogo{
+    background-color: url("logomarkernukkle.png");
+    height:100%; width: 100%;
+}
+.areaDeDados{
+    width: 290px;
+    height: 500px;
+    color:black;
+}
+.centralizar{
+    text-align: center;
+}
+.options {
+    width: 50%;
+    height: 50%;
+    left: -285px;
+    color:black;
+    border-radius: 10px;
+    margin-left: 50em;
+    top: 0.5em;
+    z-index: 5;
+    position: absolute;
+    display: inline-block;
+}
+
+
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #454545 transparent;
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: #454545;
+    border-radius: 14px;
+    border: 0px solid #454545;
+  }

